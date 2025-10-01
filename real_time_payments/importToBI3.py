@@ -1,4 +1,6 @@
 # Import required libraries
+# THIS SCRIPT MUST BE RUN ON POWERBI PYTHON SCRIPT.
+
 import pandas as pd
 from pymongo import MongoClient
 from datetime import datetime, timedelta
