@@ -1,4 +1,3 @@
-
 import json
 import time
 import random
@@ -32,11 +31,11 @@ class ClearVuePaymentProducer:
             print(f'Message delivered to {msg.topic()} [{msg.partition()}]')
         
     def calculate_financial_period(self, date):
-        """Calculate ClearVue's financial period"""
+        """Calculate ClearVue's financial period in yyyymm format"""
         year = date.year
         month = date.month
-        quarter = (month - 1) // 3 + 1
-        fin_period = f"{year}-Q{quarter}"
+        # Format: yyyymm (e.g., 202501 for January 2025, 202512 for December 2025)
+        fin_period = f"{year}{month:02d}"
         return fin_period
     
     def generate_payment_event(self):
@@ -50,7 +49,7 @@ class ClearVuePaymentProducer:
         
         payment_event = {
             'CUSTOMER_NUMBER': random.choice(self.customer_numbers),
-            'FIN_PERIOD': fin_period,
+            'FIN_PERIOD': fin_period,  # Now in yyyymm format (e.g., "202508")
             'DEPOSIT_DATE': deposit_date.isoformat(),
             'DEPOSIT_REF': f"DEP{self.fake.unique.random_int(100000, 999999)}",
             'BANK_AMT': bank_amt,
@@ -65,6 +64,7 @@ class ClearVuePaymentProducer:
         """Start producing payment events"""
         print(f"Starting ClearVue Payment Producer...")
         print(f"Fields: CUSTOMER_NUMBER, FIN_PERIOD, DEPOSIT_DATE, DEPOSIT_REF, BANK_AMT, DISCOUNT, TOT_PAYMENT")
+        print(f"FIN_PERIOD format: yyyymm (e.g., 202501 for Jan 2025)")
         print(f"Sending events every {interval} seconds...")
         print("Press Ctrl+C to stop.\n")
         
@@ -85,7 +85,7 @@ class ClearVuePaymentProducer:
                 print(f"Event #{event_count}: {payment_event['CUSTOMER_NUMBER']} | "
                       f"{payment_event['DEPOSIT_REF']} | "
                       f"${payment_event['TOT_PAYMENT']:,.2f} | "
-                      f"{payment_event['FIN_PERIOD']}")
+                      f"{payment_event['FIN_PERIOD']}")  # Will show like "202508"
                 
                 # Poll for callbacks
                 self.producer.poll(0)

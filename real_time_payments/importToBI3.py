@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 class ClearVueBIProcessor:
-    def __init__(self, mongodb_uri="mongodb://localhost:27017/", db_name="clearvue"):
+    def __init__(self, mongodb_uri="mongodb://localhost:27017/", db_name="clearvue_2"):
         self.client = MongoClient(mongodb_uri)
         self.db = self.client[db_name]
     
@@ -74,24 +74,24 @@ class ClearVueBIProcessor:
         """Load all MongoDB collections into DataFrames and remove _id columns"""
         collections = {
             'products': self.remove_id_columns(pd.DataFrame(list(self.db["products"].find()))),
-            'sales_line': self.remove_id_columns(pd.DataFrame(list(self.db["sales line"].find()))),
-            'sales_header': self.remove_id_columns(pd.DataFrame(list(self.db["sales header"].find()))),
-            'trans_types': self.remove_id_columns(pd.DataFrame(list(self.db["trans types"].find()))),
-            'products_styles': self.remove_id_columns(pd.DataFrame(list(self.db["products styles"].find()))),
-            'product_brands': self.remove_id_columns(pd.DataFrame(list(self.db["product brands"].find()))),
-            'product_categories': self.remove_id_columns(pd.DataFrame(list(self.db["product categories"].find()))),
-            'product_ranges': self.remove_id_columns(pd.DataFrame(list(self.db["product ranges"].find()))),
-            'purchases_lines': self.remove_id_columns(pd.DataFrame(list(self.db["purchases lines"].find()))),
-            'purchases_headers': self.remove_id_columns(pd.DataFrame(list(self.db["purchases headers"].find()))),
+            'sales_line': self.remove_id_columns(pd.DataFrame(list(self.db["sales_line"].find()))),
+            'sales_header': self.remove_id_columns(pd.DataFrame(list(self.db["sales_header"].find()))),
+            'trans_types': self.remove_id_columns(pd.DataFrame(list(self.db["trans_types"].find()))),
+            'products_styles': self.remove_id_columns(pd.DataFrame(list(self.db["products_styles"].find()))),
+            'product_brands': self.remove_id_columns(pd.DataFrame(list(self.db["product_brands"].find()))),
+            'product_categories': self.remove_id_columns(pd.DataFrame(list(self.db["product_categories"].find()))),
+            'product_ranges': self.remove_id_columns(pd.DataFrame(list(self.db["product_ranges"].find()))),
+            'purchases_lines': self.remove_id_columns(pd.DataFrame(list(self.db["purchases_lines"].find()))),
+            'purchases_headers': self.remove_id_columns(pd.DataFrame(list(self.db["purchases_headers"].find()))),
             'suppliers': self.remove_id_columns(pd.DataFrame(list(self.db["suppliers"].find()))),
             'representatives': self.remove_id_columns(pd.DataFrame(list(self.db["representatives"].find()))),
             'customer': self.remove_id_columns(pd.DataFrame(list(self.db["customer"].find()))),
-            'customer_categories': self.remove_id_columns(pd.DataFrame(list(self.db["customer categories"].find()))),
-            'customer_regions': self.remove_id_columns(pd.DataFrame(list(self.db["customer regions"].find()))),
-            'customer_account_parameters': self.remove_id_columns(pd.DataFrame(list(self.db["customer account parameters"].find()))),
-            'age_analysis': self.remove_id_columns(pd.DataFrame(list(self.db["age analysis"].find()))),
-            'payment_lines': self.remove_id_columns(pd.DataFrame(list(self.db["payment lines"].find()))),
-            'payment_header': self.remove_id_columns(pd.DataFrame(list(self.db["payment header"].find())))
+            'customer_categories': self.remove_id_columns(pd.DataFrame(list(self.db["customer_categories"].find()))),
+            'customer_regions': self.remove_id_columns(pd.DataFrame(list(self.db["customer_regions"].find()))),
+            'customer_account_parameters': self.remove_id_columns(pd.DataFrame(list(self.db["customer_account_parameters"].find()))),
+            'age_analysis': self.remove_id_columns(pd.DataFrame(list(self.db["age_analysis"].find()))),
+            'payment_lines': self.remove_id_columns(pd.DataFrame(list(self.db["payment_lines"].find()))),
+            'payment_header': self.remove_id_columns(pd.DataFrame(list(self.db["payment_header"].find())))
         }
         return collections
 

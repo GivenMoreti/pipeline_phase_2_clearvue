@@ -15,7 +15,7 @@ class ClearVuePaymentProducer:
         self.topic = 'clearvue_payments'
         self.fake = Faker()
         
-        # Pre-defined customer numbers from your actual data
+        # Pre-defined customer numbers
         self.customer_numbers = [
             'CUST001', 'CUST002', 'CUST003', 'CUST004', 'CUST005',
             'CUST006', 'CUST007', 'CUST008', 'CUST009', 'CUST010'
@@ -23,13 +23,13 @@ class ClearVuePaymentProducer:
         
     def calculate_financial_period(self, date):
         """Calculate ClearVue's financial period based on your business rules"""
-        # This implements your financial year logic:
+   
         # Financial month starts last Saturday of previous month, ends last Friday of current month
         
         year = date.year
         month = date.month
         
-        # Simple implementation - you can enhance this with your exact logic
+        # 
         quarter = (month - 1) // 3 + 1
         fin_period = f"{year}-Q{quarter}"
         
@@ -84,7 +84,7 @@ class ClearVuePaymentProducer:
                 event_count += 1
                 print(f"Event #{event_count}: {payment_event['CUSTOMER_NUMBER']} | "
                       f"{payment_event['DEPOSIT_REF']} | "
-                      f"${payment_event['TOT_PAYMENT']:,.2f} | "
+                      f"R{payment_event['TOT_PAYMENT']:,.2f} | "
                       f"{payment_event['FIN_PERIOD']}")
                 
                 # Flush to ensure message is sent

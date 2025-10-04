@@ -1,28 +1,32 @@
-
 import threading
 import time
 import subprocess
 import sys
+import os
 
 def run_producer():
-    """Run the fixed payment producer"""
+    """Run the payment producer"""
     try:
-        subprocess.run([sys.executable, "payment_producer.py"])
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        producer_script = os.path.join(script_dir, "payment_producer.py")
+        subprocess.run([sys.executable, producer_script])
     except KeyboardInterrupt:
         pass
 
 def run_consumer():
-    """Run the fixed MongoDB consumer"""
+    """Run the MongoDB consumer"""
     try:
-        subprocess.run([sys.executable, "mongodb_consumer.py"])
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        consumer_script = os.path.join(script_dir, "mongodb_consumer.py")
+        subprocess.run([sys.executable, consumer_script])
     except KeyboardInterrupt:
         pass
 
 def main():
     print("=== ClearVue Ltd. Payment Stream Simulation ===")
     print("Kafka UI: http://localhost:8080")
-    print("MongoDB: localhost:27017/clearvue")
-    print("Collection: payment lines")
+    print("MongoDB: localhost:27017/clearvue_2")
+    print("Collection: payment_lines")
     print("\nUsing Confluent Kafka Python library for better stability")
     print("\nPress Ctrl+C to stop simulation\n")
     
